@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -18,6 +19,8 @@ public class CombatManager : MonoBehaviour
     public CombatStageDataSO stageData;
     public StageResultWindow stageResultWnd;
     public ObjectPool objectPool;
+    public Spawner spawner;
+    public Action GoldGetEvent;
 
     // 전투 관련 로직들을 담는 매니저 (전투 시작 / 종료)
     // 맵 내 오브젝트 들의 관리를 담당하자.
@@ -40,6 +43,9 @@ public class CombatManager : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+
+        SetStage();
+        GoldGetEvent += IncreaseGold;
     }
 
     public void IncreaseGold()

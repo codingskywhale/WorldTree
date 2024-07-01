@@ -8,6 +8,9 @@ public class Spawner : MonoBehaviour
     public Transform playerUnitSpawnTr;
     public Transform enemyUnitSpawnTr;
 
+    public List<CombatUnit> playerCombatUnits;
+    public List<CombatUnit> enemyCombatUnits; 
+
     private void Start()
     {
         StartCoroutine(SpawnEnemyUnit());
@@ -24,6 +27,7 @@ public class Spawner : MonoBehaviour
     {
         GameObject go = CombatManager.Instance.objectPool.SpawnFromPool("Player");
         go.transform.position = playerUnitSpawnTr.position;
+        playerCombatUnits.Add(go.GetComponent<CombatUnit>());
     }
 
     IEnumerator SpawnEnemyUnit()
@@ -33,6 +37,7 @@ public class Spawner : MonoBehaviour
             // 적 유닛 생성 로직 (일단 일정 시간마다 생성하는 식으로 할까?)
             GameObject go = CombatManager.Instance.objectPool.SpawnFromPool("Enemy");
             go.transform.position = enemyUnitSpawnTr.position;
+            enemyCombatUnits.Add(go.GetComponent<CombatUnit>());
 
             yield return new WaitForSeconds(0.5f);
         }
