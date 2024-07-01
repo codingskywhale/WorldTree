@@ -7,10 +7,16 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f; // 이동 속도
     public ResourceManager resourceManager; // ResourceManager 참조
     public int waterIncreaseAmount = 10; // 나무에 도착했을 때 증가하는 물의 양
+    public int waterIncreaseLevel = 1; // 물 증가량 강화 레벨
+    public int waterIncreaseUpgradeCost = 20; // 물 증가량 강화에 필요한 물의 양
 
     private int currentTargetIndex = 0;
     private bool isWaiting = false; // 대기 상태 확인
 
+    private void Start()
+    {
+        UpdateUI();
+    }
     void Update()
     {
         if (targets.Length == 0 || isWaiting)
@@ -49,8 +55,29 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // 버튼 클릭 시 호출될 메서드
-    public void IncreaseWaterAmountByButton()
+    public void UpgradeWaterIncreaseAmount()
     {
-        waterIncreaseAmount += 10; // 나무에 도착했을 때 증가하는 물의 양 10 증가
+        // 물의 양이 충분한 경우에만 강화 진행
+        if (resourceManager.waterAmount >= waterIncreaseUpgradeCost)
+        {
+            resourceManager.DecreaseWater(waterIncreaseUpgradeCost);
+            waterIncreaseLevel++;
+            waterIncreaseAmount += 10;
+            waterIncreaseUpgradeCost += 20;
+            UpdateUI();
+        }
+        else
+        {
+            Debug.Log("물이 부족하여 강화할 수 없습니다.");
+        }
+    }
+
+    // UI 업데이트 메서드
+    private void UpdateUI()
+    {
+        // 물 증가량 강화 레벨, 증가량, 강화에 필요한 물의 양을 UI에 표시
+        resourceManager.waterIncreaseLevelText.text = $"물 증가량 강화 레벨: {waterIncreaseLevel}";
+        //resourceManager.waterIncreaseAmountText.text = $"나무 도착 시 증가량: {waterIncreaseAmount}";
+        resourceManager.waterIncreaseUpgradeCostText.text = $"강화 비용: {waterIncreaseUpgradeCost} 물";
     }
 }
