@@ -20,7 +20,7 @@ public class CombatUnitMoveController : MonoBehaviour
 
     public void Move()
     {
-        if (!unit.isMeetEnemy)
+        if (!unit.isMeetEnemy || unit.nowTarget == null)
         {
             rb.velocity = (unit.combatUnitData.unitType == UnitType.Player) ? Vector2.left : Vector2.right;
             rb.velocity *= unit.combatUnitData.moveSpeed;

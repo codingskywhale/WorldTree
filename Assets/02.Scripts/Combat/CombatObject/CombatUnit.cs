@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum UnitType
@@ -14,6 +13,8 @@ public class CombatUnit : MonoBehaviour
     public float nowHP;
     private float maxHP;
 
+    public GameObject nowTarget;
+
     private void Awake()
     {
         SetInitialStat();
@@ -27,26 +28,25 @@ public class CombatUnit : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
         // collision의 대상이 Player인지 Enemy인지 파악해야 한다.
-        if (collision.gameObject.TryGetComponent(out CombatUnit combatUnit))
+        if (collision.gameObject.TryGetComponent(out CombatUnit enemyUnit))
         {
-            if(combatUnit.combatUnitData.unitType == UnitType.Enemy)
+            if (combatUnitData.unitType != enemyUnit.combatUnitData.unitType)
             {
+                nowTarget = collision.gameObject;
                 isMeetEnemy = true;
-                Debug.Log(combatUnit.combatUnitData.unitName);
-                StartCoroutine(Attack(combatUnit));
+                Debug.Log(enemyUnit.combatUnitData.unitName);
+                StartCoroutine(Attack(enemyUnit));
             }
         }
     }
 
-    IEnumerator Attack(CombatUnit unit)
+    IEnumerator Attack(CombatUnit enemyUnit)
     {
         // 둘 중 하나가 죽을 때 까지
-        while (unit.nowHP > 0 && nowHP > 0)
+        while (enemyUnit.nowHP > 0 && nowHP > 0)
         {
-            ApplyDamage(unit);
-            Debug.Log(unit.nowHP);
+            ApplyDamage(enemyUnit);
             yield return new WaitForSeconds(combatUnitData.attackSpeed);
         }
     }
@@ -54,10 +54,24 @@ public class CombatUnit : MonoBehaviour
     public void ApplyDamage(CombatUnit unit)
     {
         unit.nowHP -= combatUnitData.attackDamage;
-        if(unit.nowHP <= 0)
+        if (unit.nowHP <= 0)
         {
             Destroy(unit.gameObject);
             isMeetEnemy = false;
+            CheckNearEnemy();
+        }
+    }
+
+    //적이 죽었을 때, 근처 적을 체크하는 메서드
+    public void CheckNearEnemy()
+    {
+        Ray ray = new Ray();
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.left, 0.1f);
+        if(hit)
+        {
+            nowTarget = hit.collider.gameObject;
+            Debug.Log(hit.collider.gameObject.name + "히트가 진짜였다.");
+            isMeetEnemy = true;
         }
     }
 }

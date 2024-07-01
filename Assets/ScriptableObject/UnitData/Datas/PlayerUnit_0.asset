@@ -16,5 +16,5 @@ MonoBehaviour:
   unitType: 0
   hp: 100
   attackDamage: 25
-  moveSpeed: 4
+  moveSpeed: 3
   attackSpeed: 1
