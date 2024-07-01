@@ -15,6 +15,7 @@ public class UIPlacementManager : MonoBehaviour
     [SerializeField] private Button[] itemButtons;
     [SerializeField] private GameObject placementInventoryPanel;
     [SerializeField] private GameObject placementActionPanel;
+    [SerializeField] private Button backButton;
 
     private int currentStartIndex = 0;
 
@@ -25,6 +26,7 @@ public class UIPlacementManager : MonoBehaviour
         rightArrowButton.onClick.AddListener(ShowNextItems);
         installButton.onClick.AddListener(InstallObject);
         cancelButton.onClick.AddListener(CancelPlacement);
+        backButton.onClick.AddListener(HideItemSlots);
         UpdateItemButtons();
         HideItemSlots();
         HidePlacementActions();
@@ -39,17 +41,19 @@ public class UIPlacementManager : MonoBehaviour
 
     void HideItemSlots()
     {
+        placementButton.gameObject.SetActive(true); // Placement 버튼 활성화
         placementInventoryPanel.SetActive(false);   // 아이템 슬롯 패널 비활성화
     }
 
     void ShowPlacementActions()
     {
-        placementActionPanel.SetActive(true);       // 설치 및 취소 패널 활성화
+        placementButton.gameObject.SetActive(false); // Placement 버튼 비활성화
+        placementActionPanel.SetActive(true);        // 설치 및 취소 패널 활성화
     }
 
     void HidePlacementActions()
     {
-        placementActionPanel.SetActive(false);      // 설치 및 취소 패널 비활성화
+        placementActionPanel.SetActive(false);       // 설치 및 취소 패널 비활성화
     }
 
     void ShowPreviousItems()
@@ -122,14 +126,14 @@ public class UIPlacementManager : MonoBehaviour
     void InstallObject()
     {
         placementManager.InstallObject();
-        placementButton.gameObject.SetActive(true); // Placement 버튼 다시 활성화
         HidePlacementActions();
+        ShowItemSlots(); // 아이템 슬롯 패널 다시 표시
     }
 
     void CancelPlacement()
     {
         placementManager.CancelPlacement();
-        placementButton.gameObject.SetActive(true); // Placement 버튼 다시 활성화
-        ShowItemSlots();                             // 아이템 슬롯 패널 다시 표시
+        HidePlacementActions();
+        ShowItemSlots(); // 아이템 슬롯 패널 다시 표시
     }
 }

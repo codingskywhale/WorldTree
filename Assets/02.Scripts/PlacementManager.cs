@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlacementManager : MonoBehaviour
 {
-    [SerializeField] private GameObject placementPanel;
     private GameObject currentPreviewObject;
     private Item selectedItem;
     private bool canPlace;
+    private Vector3 placementPosition;
 
     void Update()
     {
@@ -29,7 +28,6 @@ public class PlacementManager : MonoBehaviour
 
         currentPreviewObject = Instantiate(selectedItem.prefab);
         SetObjectTransparency(currentPreviewObject, 0.5f);
-        placementPanel.SetActive(true);
     }
 
     public void InstallObject()
@@ -37,8 +35,8 @@ public class PlacementManager : MonoBehaviour
         if (currentPreviewObject == null || !canPlace) return;
 
         SetObjectTransparency(currentPreviewObject, 1.0f);
+        currentPreviewObject.transform.position = placementPosition; // 마지막 위치로 고정
         currentPreviewObject = null;
-        placementPanel.SetActive(false);
     }
 
     public void CancelPlacement()
@@ -48,7 +46,6 @@ public class PlacementManager : MonoBehaviour
             Destroy(currentPreviewObject);
         }
         currentPreviewObject = null;
-        placementPanel.SetActive(false);
     }
 
     void HandlePreviewPosition()
@@ -58,6 +55,7 @@ public class PlacementManager : MonoBehaviour
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             currentPreviewObject.transform.position = worldPosition;
+            placementPosition = worldPosition; // 설치할 위치 저장
         }
     }
 
