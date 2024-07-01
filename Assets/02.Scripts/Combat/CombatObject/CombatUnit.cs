@@ -18,10 +18,6 @@ public class CombatUnit : MonoBehaviour
     {
         SetInitialStat();
     }
-    protected virtual void Update()
-    {
-        Move();
-    }
 
     private void SetInitialStat()
     {
@@ -53,16 +49,6 @@ public class CombatUnit : MonoBehaviour
             Debug.Log(unit.nowHP);
             yield return new WaitForSeconds(combatUnitData.attackSpeed);
         }
-    }
-
-    public void Move()
-    {
-        if (!isMeetEnemy) 
-        {
-            this.transform.position +=
-                (combatUnitData.unitType == UnitType.Player) ? Vector3.left * Time.deltaTime * combatUnitData.moveSpeed: 
-                                                               Vector3.right * Time.deltaTime * combatUnitData.moveSpeed;
-        }                           
     }
 
     public void ApplyDamage(CombatUnit unit)
