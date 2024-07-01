@@ -51,7 +51,7 @@ public class CombatUnit : MonoBehaviour
                 // 상대가 나를 공격하는 대상으로 지정
                 enemyUnit.targetingList.Add(this);
 
-                if(nowTarget == null && this.enabled) StartCoroutine(Attack());
+                if(nowTarget == null && this.gameObject.activeInHierarchy) StartCoroutine(Attack());
             }
         }
     }

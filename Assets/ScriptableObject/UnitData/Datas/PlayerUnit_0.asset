@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: "\uD30C\uB791\uC774"
   unitType: 0
-  hp: 30
-  attackDamage: 5
-  moveSpeed: 3
-  attackSpeed: 1
+  hp: 100
+  attackDamage: 10
+  moveSpeed: 2
+  attackSpeed: 0.5
