@@ -10,10 +10,11 @@ public class Inventory : MonoBehaviour
         items.Add(item);        
     }
 
-    public Item FindItemByName(string itemName)
+    public void RemoveItem(Item item)
     {
-        return items.Find(item => item.itemName == itemName);
+        items.Remove(item);        
     }
+        
 
     public List<Item> GetVisibleItems(int startIndex, int count)
     {

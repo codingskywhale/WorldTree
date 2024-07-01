@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlacementManager : MonoBehaviour
 {
@@ -8,12 +9,18 @@ public class PlacementManager : MonoBehaviour
     private Item selectedItem;
     private bool canPlace;
     private Vector3 placementPosition;
+    public Inventory inventory;
+    public UIPlacementManager uiPlacementManager;
 
     void Update()
     {
         if (currentPreviewObject != null)
         {
-            HandlePreviewPosition();
+            // 마우스가 UI 위에 있지 않을 때만 이동 처리
+            if (!IsPointerOverUIObject())
+            {
+                HandlePreviewPosition();
+            }
             CheckPlacementValidity();
         }
     }
@@ -28,15 +35,20 @@ public class PlacementManager : MonoBehaviour
 
         currentPreviewObject = Instantiate(selectedItem.prefab);
         SetObjectTransparency(currentPreviewObject, 0.5f);
+        placementPosition = currentPreviewObject.transform.position; // 초기 위치 설정
     }
 
-    public void InstallObject()
+    public bool InstallObject()
     {
-        if (currentPreviewObject == null || !canPlace) return;
+        if (currentPreviewObject == null || !canPlace)
+        {
+            return false;
+        }
 
         SetObjectTransparency(currentPreviewObject, 1.0f);
-        currentPreviewObject.transform.position = placementPosition; // 마지막 위치로 고정
         currentPreviewObject = null;
+        inventory.RemoveItem(selectedItem);
+        return true;
     }
 
     public void CancelPlacement()
@@ -100,5 +112,14 @@ public class PlacementManager : MonoBehaviour
                 material.color = color;
             }
         }
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 }

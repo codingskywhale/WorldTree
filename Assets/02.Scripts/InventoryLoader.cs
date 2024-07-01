@@ -23,8 +23,7 @@ public class InventoryLoader : MonoBehaviour
                 icon = itemData.icon
             };
             inventory.AddItem(item);
-        }
-        Debug.Log("Items successfully loaded and added from ScriptableObjects.");
+        }        
     }
 
     [System.Serializable]

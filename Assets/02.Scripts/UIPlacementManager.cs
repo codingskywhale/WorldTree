@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class UIPlacementManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class UIPlacementManager : MonoBehaviour
     [SerializeField] private GameObject placementInventoryPanel;
     [SerializeField] private GameObject placementActionPanel;
     [SerializeField] private Button backButton;
+    [SerializeField] private GameObject errorPopup;
 
     private int currentStartIndex = 0;
 
@@ -24,7 +26,7 @@ public class UIPlacementManager : MonoBehaviour
         placementButton.onClick.AddListener(ShowItemSlots);
         leftArrowButton.onClick.AddListener(ShowPreviousItems);
         rightArrowButton.onClick.AddListener(ShowNextItems);
-        installButton.onClick.AddListener(InstallObject);
+        installButton.onClick.AddListener(AttemptInstallObject);
         cancelButton.onClick.AddListener(CancelPlacement);
         backButton.onClick.AddListener(HideItemSlots);
         UpdateItemButtons();
@@ -123,11 +125,19 @@ public class UIPlacementManager : MonoBehaviour
         rightArrowButton.interactable = currentStartIndex + 4 < inventory.GetItemCount();
     }
 
-    void InstallObject()
+    void AttemptInstallObject()
     {
-        placementManager.InstallObject();
-        HidePlacementActions();
-        ShowItemSlots(); // 아이템 슬롯 패널 다시 표시
+        bool success = placementManager.InstallObject();
+        if (success)
+        {
+            UpdateItemButtons();
+            HidePlacementActions();
+            ShowItemSlots(); // 아이템 슬롯 패널 다시 표시
+        }
+        else
+        {
+            ShowErrorPopup("You cannot install it here!!");
+        }
     }
 
     void CancelPlacement()
@@ -135,5 +145,21 @@ public class UIPlacementManager : MonoBehaviour
         placementManager.CancelPlacement();
         HidePlacementActions();
         ShowItemSlots(); // 아이템 슬롯 패널 다시 표시
+    }
+
+    public void ShowErrorPopup(string message)
+    {
+        if (errorPopup != null)
+        {
+            errorPopup.SetActive(true);
+            errorPopup.GetComponentInChildren<TMP_Text>().text = message;
+            StartCoroutine(HideErrorPopup());
+        }
+    }
+        
+    private IEnumerator HideErrorPopup()
+    {
+        yield return new WaitForSeconds(1f); 
+        errorPopup.SetActive(false);
     }
 }
