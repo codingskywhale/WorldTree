@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TouchInputManager : MonoBehaviour
 {
@@ -14,10 +16,21 @@ public class TouchInputManager : MonoBehaviour
     void Update()
     {
         // 터치 입력 감지
-        if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 버튼 클릭 또는 터치 입력
+        if (Input.GetMouseButtonDown(0) && !isPointerOverUIElement()) // 마우스 왼쪽 버튼 클릭 또는 터치 입력, UI 요소 위에 있지 않은 경우
         {
             resourceManager.IncreaseWater(touchIncreaseAmount); // 물의 양 증가
         }
+    }
+
+    private bool isPointerOverUIElement()
+    {
+        // 포인터가 UI 요소 위에 있는지 확인
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        return results.Count > 0;
     }
 
     // 강화 버튼 클릭 시 호출될 메서드
