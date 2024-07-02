@@ -6,12 +6,12 @@ public class InventoryLoader : MonoBehaviour
     public Inventory inventory;
     public ItemData[] itemDataArray;    
 
-    void Start()
+    private void Start()
     {        
         LoadItemsFromScriptableObjects();        
     }
 
-    void LoadItemsFromScriptableObjects()
+    private void LoadItemsFromScriptableObjects()
     {
         ItemData[] itemDataArray = Resources.LoadAll<ItemData>("ScriptableObjects/Items");
         foreach (ItemData itemData in itemDataArray)

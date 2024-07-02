@@ -21,7 +21,7 @@ public class UIPlacementManager : MonoBehaviour
 
     private int currentStartIndex = 0;
 
-    void Start()
+    private void Start()
     {
         placementButton.onClick.AddListener(ShowItemSlots);
         leftArrowButton.onClick.AddListener(ShowPreviousItems);
@@ -34,31 +34,31 @@ public class UIPlacementManager : MonoBehaviour
         HidePlacementActions();
     }
 
-    void ShowItemSlots()
+    private void ShowItemSlots()
     {
         placementButton.gameObject.SetActive(false); // Placement 버튼 비활성화
         placementInventoryPanel.SetActive(true);    // 아이템 슬롯 패널 활성화
         placementActionPanel.SetActive(false);      // 설치 및 취소 패널 비활성화
     }
 
-    void HideItemSlots()
+    private void HideItemSlots()
     {
         placementButton.gameObject.SetActive(true); // Placement 버튼 활성화
         placementInventoryPanel.SetActive(false);   // 아이템 슬롯 패널 비활성화
     }
 
-    void ShowPlacementActions()
+    private void ShowPlacementActions()
     {
         placementButton.gameObject.SetActive(false); // Placement 버튼 비활성화
         placementActionPanel.SetActive(true);        // 설치 및 취소 패널 활성화
     }
 
-    void HidePlacementActions()
+    private void HidePlacementActions()
     {
         placementActionPanel.SetActive(false);       // 설치 및 취소 패널 비활성화
     }
 
-    void ShowPreviousItems()
+    private void ShowPreviousItems()
     {
         if (currentStartIndex > 0)
         {
@@ -67,7 +67,7 @@ public class UIPlacementManager : MonoBehaviour
         }
     }
 
-    void ShowNextItems()
+    private void ShowNextItems()
     {
         if (currentStartIndex + 4 < inventory.GetItemCount())
         {
@@ -76,7 +76,7 @@ public class UIPlacementManager : MonoBehaviour
         }
     }
 
-    void UpdateItemButtons()
+    private void UpdateItemButtons()
     {
         List<Item> visibleItems = inventory.GetVisibleItems(currentStartIndex, 4);
         for (int i = 0; i < itemButtons.Length; i++)
@@ -112,20 +112,20 @@ public class UIPlacementManager : MonoBehaviour
         UpdateArrowButtons();
     }
 
-    void SelectItem(Item item)
+    private void SelectItem(Item item)
     {
         placementManager.SelectItem(item);
         HideItemSlots();
         ShowPlacementActions();
     }
 
-    void UpdateArrowButtons()
+    private void UpdateArrowButtons()
     {
         leftArrowButton.interactable = currentStartIndex > 0;
         rightArrowButton.interactable = currentStartIndex + 4 < inventory.GetItemCount();
     }
 
-    void AttemptInstallObject()
+    private void AttemptInstallObject()
     {
         bool success = placementManager.InstallObject();
         if (success)
@@ -140,7 +140,7 @@ public class UIPlacementManager : MonoBehaviour
         }
     }
 
-    void CancelPlacement()
+    private void CancelPlacement()
     {
         placementManager.CancelPlacement();
         HidePlacementActions();

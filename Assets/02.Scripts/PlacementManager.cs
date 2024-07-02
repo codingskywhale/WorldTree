@@ -6,17 +6,18 @@ using UnityEngine.EventSystems;
 public class PlacementManager : MonoBehaviour
 {
     private GameObject currentPreviewObject;
+    private GameObject currentOverlayObject;
     private Item selectedItem;
-    private bool canPlace;
-    private Vector3 placementPosition;
+    private bool canPlace;    
     public Inventory inventory;
     public UIPlacementManager uiPlacementManager;
+    public GameObject overlayPrefab;
+    public CircleCollider2D territoryCollider;
 
-    void Update()
+    private void Update()
     {
         if (currentPreviewObject != null)
         {
-            // 마우스가 UI 위에 있지 않을 때만 이동 처리
             if (!IsPointerOverUIObject())
             {
                 HandlePreviewPosition();
@@ -32,22 +33,28 @@ public class PlacementManager : MonoBehaviour
         {
             Destroy(currentPreviewObject);
         }
+        if (currentOverlayObject != null)
+        {
+            Destroy(currentOverlayObject);
+        }
 
-        currentPreviewObject = Instantiate(selectedItem.prefab);
-        SetObjectTransparency(currentPreviewObject, 0.5f);
-        placementPosition = currentPreviewObject.transform.position; // 초기 위치 설정
+        currentPreviewObject = Instantiate(selectedItem.prefab);                        
+        currentOverlayObject = Instantiate(overlayPrefab, currentPreviewObject.transform);
+        currentOverlayObject.transform.localPosition = Vector3.zero;
+
+        AdjustOverlaySize();        
     }
 
     public bool InstallObject()
     {
         if (currentPreviewObject == null || !canPlace)
-        {
+        {           
             return false;
         }
 
-        SetObjectTransparency(currentPreviewObject, 1.0f);
         currentPreviewObject = null;
-        inventory.RemoveItem(selectedItem);
+        Destroy(currentOverlayObject);
+        inventory.RemoveItem(selectedItem);        
         return true;
     }
 
@@ -57,27 +64,53 @@ public class PlacementManager : MonoBehaviour
         {
             Destroy(currentPreviewObject);
         }
+        if (currentOverlayObject != null)
+        {
+            Destroy(currentOverlayObject);
+        }
         currentPreviewObject = null;
+        currentOverlayObject = null;        
     }
 
-    void HandlePreviewPosition()
+    private void HandlePreviewPosition()
     {
         if (Input.GetMouseButton(0))
         {
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            currentPreviewObject.transform.position = worldPosition;
-            placementPosition = worldPosition; // 설치할 위치 저장
+                        
+            Vector3 clampedPosition = ClampPositionToTerritory(worldPosition);
+            currentPreviewObject.transform.position = clampedPosition;
+            currentOverlayObject.transform.position = clampedPosition;            
         }
     }
 
-    void CheckPlacementValidity()
+    private Vector3 ClampPositionToTerritory(Vector3 position)
     {
+        Vector3 territoryCenter = territoryCollider.transform.position;
+        float territoryRadius = territoryCollider.radius * territoryCollider.transform.localScale.x;
+
+        Vector3 direction = position - territoryCenter;
+        if (direction.magnitude > territoryRadius)
+        {
+            direction = direction.normalized * territoryRadius;
+        }
+
+        return territoryCenter + direction;
+    }
+
+    private void CheckPlacementValidity()
+    {
+        canPlace = true; 
         Collider2D[] colliders = Physics2D.OverlapBoxAll(currentPreviewObject.transform.position, currentPreviewObject.GetComponent<Collider2D>().bounds.size, 0);
-        canPlace = true;
 
         foreach (var collider in colliders)
-        {
+        {            
+            if (collider.CompareTag("Territory"))
+            {
+                continue;
+            }
+
             if (collider.gameObject != currentPreviewObject)
             {
                 canPlace = false;
@@ -85,32 +118,17 @@ public class PlacementManager : MonoBehaviour
             }
         }
 
-        SetObjectColor(currentPreviewObject, canPlace ? Color.white : Color.red);
+        SetOverlayColor(canPlace);
     }
 
-    void SetObjectTransparency(GameObject obj, float alpha)
-    {
-        var renderers = obj.GetComponentsInChildren<Renderer>();
-        foreach (var renderer in renderers)
-        {
-            foreach (var material in renderer.materials)
-            {
-                Color color = material.color;
-                color.a = alpha;
-                material.color = color;
-            }
-        }
-    }
 
-    void SetObjectColor(GameObject obj, Color color)
+    private void SetOverlayColor(bool canPlace)
     {
-        var renderers = obj.GetComponentsInChildren<Renderer>();
-        foreach (var renderer in renderers)
+        var overlayRenderer = currentOverlayObject.GetComponent<SpriteRenderer>();
+        if (overlayRenderer != null)
         {
-            foreach (var material in renderer.materials)
-            {
-                material.color = color;
-            }
+            Color color = canPlace ? new Color(0.0f, 1.0f, 0.0f, 0.9f) : new Color(1.0f, 0.0f, 0.0f, 0.9f);
+            overlayRenderer.color = color;            
         }
     }
 
@@ -121,5 +139,36 @@ public class PlacementManager : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
+    }
+
+    private Bounds GetBounds(GameObject obj)
+    {
+        var renderers = obj.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0)
+        {
+            return new Bounds();
+        }
+
+        Bounds bounds = renderers[0].bounds;
+        foreach (var renderer in renderers)
+        {
+            bounds.Encapsulate(renderer.bounds);
+        }
+        return bounds;
+    }
+
+    private void AdjustOverlaySize()
+    {
+        if (currentOverlayObject != null && currentPreviewObject != null)
+        {
+            var bounds = GetBounds(currentPreviewObject);
+            float offset = 0.15f;
+
+            currentOverlayObject.transform.localScale = new Vector3(
+                (bounds.size.x + offset) / currentOverlayObject.GetComponent<SpriteRenderer>().bounds.size.x,
+                (bounds.size.y + offset) / currentOverlayObject.GetComponent<SpriteRenderer>().bounds.size.y,
+                1
+            );
+        }
     }
 }
