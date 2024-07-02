@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49afb49c0f935ba468698d126c3408f3, type: 3}
   m_Name: PlayerBase
   m_EditorClassIdentifier: 
-  unitName: "\uC18C\uC911\uD55C \uB098\uBB34"
+  unitName: tree
   unitType: 0
   hp: 2000
   attackDamage: 0
   moveSpeed: 0
   attackSpeed: 0
+  unitIcon: {fileID: 0}

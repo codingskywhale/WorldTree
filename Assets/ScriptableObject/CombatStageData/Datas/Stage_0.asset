@@ -16,3 +16,5 @@ MonoBehaviour:
   stageName: "\uD29C\uD1A0\uB9AC\uC5BC \uC2A4\uD14C\uC774\uC9C0"
   friendlyBaseHP: 200
   enemyBaseHP: 100
+  enemyUnitDatas:
+  - {fileID: 11400000, guid: 085ab1711a4853c43b065fdb4c671a46, type: 2}

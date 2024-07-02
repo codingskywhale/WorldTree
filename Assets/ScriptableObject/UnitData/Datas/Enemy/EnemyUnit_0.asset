@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49afb49c0f935ba468698d126c3408f3, type: 3}
   m_Name: EnemyUnit_0
   m_EditorClassIdentifier: 
-  unitName: "\uBE68\uAC15\uC774"
+  unitName: red
   unitType: 1
   hp: 30
-  attackDamage: 100
+  attackDamage: 3
   moveSpeed: 5
   attackSpeed: 1
+  unitIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  unitPrefab: {fileID: 7053249418084794616, guid: 0edd22aaf7874c34dbd2211174badbbd, type: 3}

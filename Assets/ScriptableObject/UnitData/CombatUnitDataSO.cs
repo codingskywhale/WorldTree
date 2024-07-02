@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CombatUnitData", menuName = "new CombatUnitData")]
+[CreateAssetMenu(fileName = "CombatUnitData", menuName = "CombatUnitData/Default", order = 0)]
 public class CombatUnitDataSO : ScriptableObject
 {
     public string unitName;
@@ -11,4 +11,6 @@ public class CombatUnitDataSO : ScriptableObject
     public float attackDamage;
     public float moveSpeed;
     public float attackSpeed;
+    public Sprite unitIcon;
+    public GameObject unitPrefab;
 }

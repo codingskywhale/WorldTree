@@ -549,6 +549,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 67918504}
   m_CullTransparentMesh: 1
+--- !u!1 &181957377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 181957379}
+  - component: {fileID: 181957378}
+  m_Layer: 0
+  m_Name: CombatUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &181957378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181957377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8500b8b34300c1438a80888430b6330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnButtons:
+  - {fileID: 1077138597}
+  - {fileID: 601537269}
+  - {fileID: 1008386580}
+  - {fileID: 952872711}
+--- !u!4 &181957379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181957377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &204874388 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8189381355512427971, guid: e8e3ccbc99fe8c34fb782858db585bfb, type: 3}
@@ -1125,8 +1174,9 @@ GameObject:
   - component: {fileID: 601537268}
   - component: {fileID: 601537267}
   - component: {fileID: 601537266}
+  - component: {fileID: 601537269}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: SpawnButton_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1193,11 +1243,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 601537267}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 601537269}
+        m_TargetAssemblyTypeName: SpawnButton, Assembly-CSharp
+        m_MethodName: ClickSpawnPlayerUnitButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &601537267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1236,6 +1298,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 601537264}
   m_CullTransparentMesh: 1
+--- !u!114 &601537269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601537264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac9b5aa02a7bee49826f0b75a15ce41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgImage: {fileID: 601537267}
+  characterNameText: {fileID: 530920455}
+  characterIcon: {fileID: 1506593075}
+  requireGoldText: {fileID: 326465351}
+  isInDealyTime: 0
 --- !u!1 &622506779
 GameObject:
   m_ObjectHideFlags: 0
@@ -1599,6 +1678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 776984997}
   - component: {fileID: 776984996}
+  - component: {fileID: 776984998}
   m_Layer: 0
   m_Name: CombatManager
   m_TagString: Untagged
@@ -1622,6 +1702,12 @@ MonoBehaviour:
   stageResultWnd: {fileID: 204874390}
   objectPool: {fileID: 1601326774}
   spawner: {fileID: 897000032}
+  gainer: {fileID: 0}
+  unitDatas:
+  - {fileID: 11400000, guid: a1a06291b62964f4cbaef79894ea07fb, type: 2}
+  - {fileID: 11400000, guid: 92c7cac30c6fd3549925c00ac9edf923, type: 2}
+  - {fileID: 11400000, guid: 06c0421b4374f144e8fa37efc689348f, type: 2}
+  - {fileID: 11400000, guid: f0efc0a1c03fe8940951935cd61a45ce, type: 2}
   nowStageIdx: 0
   nowStageName: 
 --- !u!4 &776984997
@@ -1639,6 +1725,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &776984998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776984995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb48039d13367f349b1a9f5d6077f685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldText: {fileID: 1987705489}
 --- !u!1 &798640245
 GameObject:
   m_ObjectHideFlags: 0
@@ -2493,8 +2592,9 @@ GameObject:
   - component: {fileID: 952872710}
   - component: {fileID: 952872709}
   - component: {fileID: 952872708}
+  - component: {fileID: 952872711}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: SpawnButton_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2561,11 +2661,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 952872709}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952872711}
+        m_TargetAssemblyTypeName: SpawnButton, Assembly-CSharp
+        m_MethodName: ClickSpawnPlayerUnitButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &952872709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,6 +2716,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 952872706}
   m_CullTransparentMesh: 1
+--- !u!114 &952872711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952872706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac9b5aa02a7bee49826f0b75a15ce41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgImage: {fileID: 952872709}
+  characterNameText: {fileID: 54645996}
+  characterIcon: {fileID: 847070763}
+  requireGoldText: {fileID: 1080097150}
+  isInDealyTime: 0
 --- !u!1 &1008386575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2616,8 +2745,9 @@ GameObject:
   - component: {fileID: 1008386579}
   - component: {fileID: 1008386578}
   - component: {fileID: 1008386577}
+  - component: {fileID: 1008386580}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: SpawnButton_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2684,11 +2814,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1008386578}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1008386580}
+        m_TargetAssemblyTypeName: SpawnButton, Assembly-CSharp
+        m_MethodName: ClickSpawnPlayerUnitButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1008386578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2727,6 +2869,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008386575}
   m_CullTransparentMesh: 1
+--- !u!114 &1008386580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008386575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac9b5aa02a7bee49826f0b75a15ce41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgImage: {fileID: 1008386578}
+  characterNameText: {fileID: 837920353}
+  characterIcon: {fileID: 1768290646}
+  requireGoldText: {fileID: 652157636}
+  isInDealyTime: 0
 --- !u!1 &1018973477
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,8 +3003,9 @@ GameObject:
   - component: {fileID: 1077138596}
   - component: {fileID: 1077138595}
   - component: {fileID: 1077138594}
+  - component: {fileID: 1077138597}
   m_Layer: 5
-  m_Name: Button
+  m_Name: SpawnButton_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2912,11 +3072,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1077138595}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1077138597}
+        m_TargetAssemblyTypeName: SpawnButton, Assembly-CSharp
+        m_MethodName: ClickSpawnPlayerUnitButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1077138595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2941,7 +3113,7 @@ MonoBehaviour:
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -2955,6 +3127,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077138592}
   m_CullTransparentMesh: 1
+--- !u!114 &1077138597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077138592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fac9b5aa02a7bee49826f0b75a15ce41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgImage: {fileID: 1077138595}
+  characterNameText: {fileID: 1988154219}
+  characterIcon: {fileID: 1228541504}
+  requireGoldText: {fileID: 622506781}
+  isInDealyTime: 0
 --- !u!1 &1080097148
 GameObject:
   m_ObjectHideFlags: 0
@@ -3786,13 +3975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90c3b1987064734e9e3f01f232d6a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pools:
-  - tag: Player
-    prefab: {fileID: 1499411950005427045, guid: 2f978db08073a2e4e9e7dcef16ed6de2, type: 3}
-    size: 20
-  - tag: Enemy
-    prefab: {fileID: 7053249418084794616, guid: 0edd22aaf7874c34dbd2211174badbbd, type: 3}
-    size: 20
+  Pools: []
 --- !u!4 &1601326775
 Transform:
   m_ObjectHideFlags: 0
@@ -4560,6 +4743,7 @@ SceneRoots:
   - {fileID: 347073941}
   - {fileID: 798640248}
   - {fileID: 776984997}
+  - {fileID: 181957379}
   - {fileID: 897000033}
   - {fileID: 1601326775}
   - {fileID: 810296933}

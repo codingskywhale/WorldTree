@@ -7,4 +7,6 @@ public class CombatStageDataSO : ScriptableObject
     public string stageName;
     public float friendlyBaseHP;
     public float enemyBaseHP;
+
+    public CombatUnitDataSO[] enemyUnitDatas;
 }

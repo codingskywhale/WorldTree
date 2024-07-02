@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49afb49c0f935ba468698d126c3408f3, type: 3}
-  m_Name: PlayerUnit_0
+  m_Script: {fileID: 11500000, guid: 6b590ff69ffe1de4fbb650dd99285c44, type: 3}
+  m_Name: PlayerUnit_2
   m_EditorClassIdentifier: 
-  unitName: "\uD30C\uB791\uC774"
+  unitName: blue_2
   unitType: 0
-  hp: 100
-  attackDamage: 10
+  hp: 50
+  attackDamage: 15
   moveSpeed: 2
   attackSpeed: 0.5
+  unitIcon: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  cost: 150
+  unitPrefab: {fileID: 1499411950005427045, guid: 2f978db08073a2e4e9e7dcef16ed6de2, type: 3}

@@ -20,15 +20,11 @@ public class CombatManager : MonoBehaviour
     public StageResultWindow stageResultWnd;
     public ObjectPool objectPool;
     public Spawner spawner;
-    public Action GoldGetEvent;
-
-    // 전투 관련 로직들을 담는 매니저 (전투 시작 / 종료)
-    // 맵 내 오브젝트 들의 관리를 담당하자.
-    // 스포너는 별도로?
+    public GoldGainer gainer;
+    public PlayerUnitDataSO[] unitDatas;
 
     public int nowStageIdx;
     public string nowStageName;
-    private float nowGold;
 
     private void Awake()
     {
@@ -44,18 +40,22 @@ public class CombatManager : MonoBehaviour
             }
         }
 
+        gainer = GetComponent<GoldGainer>();
         SetStage();
-        GoldGetEvent += IncreaseGold;
+        spawner.StartSpawnEnemy();
     }
-
-    public void IncreaseGold()
+    private void Start()
     {
-        nowGold += 5;
-        // 골드가 오르면 UI에도 적용이 되어야 한다.
+        StartGame();
     }
 
     public void StartGame()
     {
+        // 오브젝트 풀에 데이터 추가
+        for (int i = 0; i < unitDatas.Length; i++)
+        {
+            objectPool.AddtoPool(unitDatas[i].unitName, unitDatas[i].unitPrefab, 10);
+        }
         // 게임 시작 시 실행되어야 할 내용들
         // 게임 시작 시 골드 설정
         // 골드 생성 시작
@@ -66,6 +66,14 @@ public class CombatManager : MonoBehaviour
     {
         nowStageIdx = stageData.stageIdx;
         nowStageName = stageData.stageName;
+
+        // 적을 오브젝트 풀에 미리 추가하기. (적 정보는 스테이지 정보에 있음)
+        for (int i = 0; i < stageData.enemyUnitDatas.Length; i++)
+        {
+            CombatUnitDataSO unitData = stageData.enemyUnitDatas[i];
+            objectPool.AddtoPool(unitData.unitName, unitData.unitPrefab, 20);
+            Debug.Log(objectPool.Pools.Count);
+        }
     }
     public void ClearStage()
     {
@@ -73,10 +81,6 @@ public class CombatManager : MonoBehaviour
         Debug.Log("게임 클리어!!");
         stageResultWnd.gameObject.SetActive(true);
         stageResultWnd.SetClear();
-        // 게임 클리어 시 실행될 내용들
-        // 게임 클리어 글씨 출력
-        // 보상 획득 창 출력
-        // 창 내에 메인 씬으로 돌아가는 버튼 만들기.
     }
 
     public void DefeatStage()
@@ -85,8 +89,5 @@ public class CombatManager : MonoBehaviour
         Debug.Log("게임 패배...");
         stageResultWnd.gameObject.SetActive(true);
         stageResultWnd.SetDefeat();
-        // 게임 패배 시 실행될 내용들
-        // 패배 관련 글씨 출력
-        // 메뉴로 돌아가기
     }
 }

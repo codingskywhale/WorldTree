@@ -204,10 +204,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d490d33af71209c409c9d2b59ba8cbba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMeetEnemy: 0
-  combatUnitData: {fileID: 11400000, guid: be161d36579de164c872877e3af04246, type: 2}
+  combatUnitData: {fileID: 11400000, guid: a1a06291b62964f4cbaef79894ea07fb, type: 2}
   nowHP: 0
   nowTarget: {fileID: 0}
+  nearEnemyList: []
   targetingList: []
 --- !u!114 &1553529466449506425
 MonoBehaviour:

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49afb49c0f935ba468698d126c3408f3, type: 3}
   m_Name: EnemyBase
   m_EditorClassIdentifier: 
-  unitName: 
+  unitName: treasure
   unitType: 1
   hp: 100
   attackDamage: 0
   moveSpeed: 0
   attackSpeed: 0
+  unitIcon: {fileID: 0}
