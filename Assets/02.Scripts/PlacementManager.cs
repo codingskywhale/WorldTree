@@ -12,7 +12,7 @@ public class PlacementManager : MonoBehaviour
     public Inventory inventory;
     public UIPlacementManager uiPlacementManager;
     public GameObject overlayPrefab;
-    public CircleCollider2D territoryCollider;
+    public CircleCollider2D territoryCollider;        
 
     private void Update()
     {

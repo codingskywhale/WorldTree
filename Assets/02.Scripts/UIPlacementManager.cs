@@ -17,7 +17,7 @@ public class UIPlacementManager : MonoBehaviour
     [SerializeField] private GameObject placementInventoryPanel;
     [SerializeField] private GameObject placementActionPanel;
     [SerializeField] private Button backButton;
-    [SerializeField] private GameObject errorPopup;
+    [SerializeField] private GameObject errorPopup;    
 
     private int currentStartIndex = 0;
 
@@ -55,7 +55,7 @@ public class UIPlacementManager : MonoBehaviour
 
     private void HidePlacementActions()
     {
-        placementActionPanel.SetActive(false);       // 설치 및 취소 패널 비활성화
+        placementActionPanel.SetActive(false);       // 설치 및 취소 패널 비활성화        
     }
 
     private void ShowPreviousItems()
@@ -116,7 +116,7 @@ public class UIPlacementManager : MonoBehaviour
     {
         placementManager.SelectItem(item);
         HideItemSlots();
-        ShowPlacementActions();
+        ShowPlacementActions();        
     }
 
     private void UpdateArrowButtons()
@@ -132,7 +132,7 @@ public class UIPlacementManager : MonoBehaviour
         {
             UpdateItemButtons();
             HidePlacementActions();
-            ShowItemSlots(); // 아이템 슬롯 패널 다시 표시
+            ShowItemSlots(); 
         }
         else
         {
@@ -144,7 +144,7 @@ public class UIPlacementManager : MonoBehaviour
     {
         placementManager.CancelPlacement();
         HidePlacementActions();
-        ShowItemSlots(); // 아이템 슬롯 패널 다시 표시
+        ShowItemSlots();        
     }
 
     public void ShowErrorPopup(string message)
@@ -161,5 +161,5 @@ public class UIPlacementManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f); 
         errorPopup.SetActive(false);
-    }
+    }    
 }
