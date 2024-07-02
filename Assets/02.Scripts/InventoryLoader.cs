@@ -24,11 +24,5 @@ public class InventoryLoader : MonoBehaviour
             };
             inventory.AddItem(item);
         }        
-    }
-
-    [System.Serializable]
-    private class ItemArray
-    {
-        public Item[] items;
-    }
+    }        
 }
