@@ -21,7 +21,10 @@ public class ResourceManager : MonoBehaviour
             waterManager.DecreaseWater(waterNeededForUpgrade);
             waterManager.currentLevel += amount;
             UpdateUI();
-            UpdateGroundSize();
+            if (waterManager.currentLevel % 5 == 0)
+            {
+                UpdateGroundSize();
+            }
         }
         else
         {
@@ -40,7 +43,7 @@ public class ResourceManager : MonoBehaviour
         int waterNeededForCurrentLevel = waterManager.CalculateWaterNeededForUpgrade(1);
         uiManager.UpdateWaterUI(waterManager.waterAmount, waterNeededForCurrentLevel);
         uiManager.UpdateLevelUI(waterManager.currentLevel);
-        uiManager.UpdateUpgradeRequirementUI(waterNeededForCurrentLevel);
+        uiManager.UpdateUpgradeRequirementUI(waterManager.currentLevel, waterNeededForCurrentLevel);
         uiManager.UpdateTreeImages(waterManager.currentLevel, uiManager.treeImages);
     }
 
