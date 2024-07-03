@@ -7,7 +7,12 @@ public class CombatBase : MonoBehaviour
     private float baseMaxHP;
 
     [SerializeField] TextMeshPro baseHPText;
+    BaseUnit unit;
 
+    private void Awake()
+    {
+        unit = GetComponent<BaseUnit>();
+    }
     private void Start()
     {
         InitSet();
@@ -15,8 +20,6 @@ public class CombatBase : MonoBehaviour
 
     private void InitSet()
     {
-        baseMaxHP = this.CompareTag("Player") ? CombatManager.Instance.stageData.friendlyBaseHP : CombatManager.Instance.stageData.enemyBaseHP;
-        baseNowHP = baseMaxHP;
         UpdateHPText();
     }
     public void ApplyBaseHPDecrease(float value)

@@ -23,8 +23,9 @@ public class CombatManager : MonoBehaviour
     public GoldGainer gainer;
     public PlayerUnitDataSO[] unitDatas;
 
-    public int nowStageIdx;
-    public string nowStageName;
+    public Action OnGameStart;
+    int nowStageIdx;
+    string nowStageName;
 
     private void Awake()
     {
@@ -41,15 +42,16 @@ public class CombatManager : MonoBehaviour
         }
 
         gainer = GetComponent<GoldGainer>();
-        SetStage();
-        spawner.StartSpawnEnemy();
-    }
-    private void Start()
-    {
-        StartGame();
     }
 
     public void StartGame()
+    {
+        SetPlayerUnitData();
+        SetStage();
+        gainer.StartGainGold();
+    }
+
+    private void SetPlayerUnitData()
     {
         // 오브젝트 풀에 데이터 추가
         for (int i = 0; i < unitDatas.Length; i++)
@@ -64,16 +66,13 @@ public class CombatManager : MonoBehaviour
 
     private void SetStage()
     {
-        nowStageIdx = stageData.stageIdx;
-        nowStageName = stageData.stageName;
-
         // 적을 오브젝트 풀에 미리 추가하기. (적 정보는 스테이지 정보에 있음)
         for (int i = 0; i < stageData.enemyUnitDatas.Length; i++)
         {
             CombatUnitDataSO unitData = stageData.enemyUnitDatas[i];
             objectPool.AddtoPool(unitData.unitName, unitData.unitPrefab, 20);
-            Debug.Log(objectPool.Pools.Count);
         }
+        spawner.StartSpawnEnemy();
     }
     public void ClearStage()
     {

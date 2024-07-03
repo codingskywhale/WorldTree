@@ -10,7 +10,7 @@ public class GoldGainer : MonoBehaviour
     private float goldIncreaseDelay = 0.1f;
 
     public TextMeshProUGUI goldText;
-    private void Start()
+    public void StartGainGold()
     {
         StartCoroutine(IncreaseGold());
     }
@@ -25,8 +25,5 @@ public class GoldGainer : MonoBehaviour
             goldText.text = $"Gold : {nowGold}";
             yield return waitTime;
         }
-        // 골드가 오르면 UI에도 적용이 되어야 한다.
-        // 버튼 UI 및 상단 보유 골드량도 늘어나야 함.
-        // 구매 가능한 경우 버튼을 상호작용 가능하도록 변경해주자.
     }
 }

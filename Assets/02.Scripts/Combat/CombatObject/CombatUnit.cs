@@ -1,43 +1,27 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public enum UnitType
-{
-    Player,
-    Enemy
-}
 
-public class CombatUnit : MonoBehaviour
+public class CombatUnit : Unit
 {
     public CombatUnitDataSO combatUnitData;
-    public float nowHP;
-    private float maxHP;
 
     public GameObject nowTarget;
 
     // 근처에 있는 적들의 정보를 저장함. 
     public List<CombatUnit> nearEnemyList = new List<CombatUnit>();
 
-    bool isBase = false;
-
     // 나를 공격 대상으로 삼은 적의 정보를 저장함.
     // 내가 죽었을 때에 나를 대상으로 하는 유닛들의 공격 대상 정보를 없애 주어야 함.
     public List<CombatUnit> targetingList = new List<CombatUnit>();
+    public bool isAttackBase;
 
-    private void Awake()
-    {
-        SetInitialStat();
-    }
-
-    private void SetInitialStat()
+    protected override void SetInitialStat()
     {
         maxHP = combatUnitData.hp;
         nowHP = maxHP;
     }
-
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out CombatUnit enemyUnit))
@@ -51,13 +35,23 @@ public class CombatUnit : MonoBehaviour
                 // 상대가 나를 공격하는 대상으로 지정
                 enemyUnit.targetingList.Add(this);
 
-                if(nowTarget == null && this.gameObject.activeInHierarchy) StartCoroutine(Attack());
+                if (nowTarget == null && this.gameObject.activeInHierarchy) StartCoroutine(Attack());
+            }
+        }
+        else if (collision.gameObject.TryGetComponent(out BaseUnit baseUnit))
+        {
+            if (combatUnitData.unitType != baseUnit.unitData.unitType)
+            {
+                isAttackBase = true;
+                StartCoroutine(Attack(baseUnit));
             }
         }
     }
 
-    IEnumerator Attack()
+    IEnumerator Attack(BaseUnit baseUnit = null)
     {
+        WaitForSeconds wait = new WaitForSeconds(combatUnitData.attackSpeed);
+
         if (nearEnemyList.Count > 0)
         {
             CombatUnit enemyUnit = nearEnemyList[0];
@@ -68,7 +62,16 @@ public class CombatUnit : MonoBehaviour
             {
                 ApplyDamage(enemyUnit);
 
-                yield return new WaitForSeconds(combatUnitData.attackSpeed);
+                yield return wait;
+            }
+        }
+        else if (isAttackBase)
+        {
+            while (isAttackBase && baseUnit.nowHP >= 0)
+            {
+                baseUnit.ApplyDamage(combatUnitData.attackDamage);
+
+                yield return wait;
             }
         }
     }
@@ -80,29 +83,16 @@ public class CombatUnit : MonoBehaviour
         // 적이 죽었을 경우
         if (enemyUnit.nowHP <= 0)
         {
-            // 적의 기지가 아닐 경우
-            if (!enemyUnit.TryGetComponent(out CombatBase enemyBase))
+            enemyUnit.ResetSetting();
+            enemyUnit.gameObject.SetActive(false);
+            nowTarget = null;
+
+            // 타겟팅 해제
+            ReleaseTargeting(enemyUnit);
+
+            if (nearEnemyList.Count > 0)
             {
-                enemyUnit.ResetSetting();
-                enemyUnit.gameObject.SetActive(false);
-                nowTarget = null;
-
-                // 타겟팅 해제
-                ReleaseTargeting(enemyUnit);
-
-                if (nearEnemyList.Count > 0)
-                {
-                    StartCoroutine(Attack());
-                }
-            }
-            else
-            {
-                if (enemyUnit.combatUnitData.unitType == UnitType.Enemy)
-                {
-                    CombatManager.Instance.ClearStage();
-                }
-
-                else CombatManager.Instance.DefeatStage();
+                StartCoroutine(Attack());
             }
         }
     }
@@ -150,10 +140,10 @@ public class CombatUnit : MonoBehaviour
         enemyUnit.targetingList.Clear();
 
         // nearEnemyList에 죽은 적의 정보를 가지고 있다면 모두 제거해야 한다. (내 근처의 적)
-        foreach(CombatUnit myUnit in this.combatUnitData.unitType == UnitType.Player ? CombatManager.Instance.spawner.playerCombatUnits 
+        foreach (CombatUnit myUnit in this.combatUnitData.unitType == UnitType.Player ? CombatManager.Instance.spawner.playerCombatUnits
                                                                                    : CombatManager.Instance.spawner.enemyCombatUnits)
         {
-            if(myUnit.nearEnemyList.Contains(enemyUnit))
+            if (myUnit.nearEnemyList.Contains(enemyUnit))
             {
                 myUnit.nearEnemyList.Remove(enemyUnit);
             }
