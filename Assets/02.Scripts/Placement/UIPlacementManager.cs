@@ -37,26 +37,27 @@ public class UIPlacementManager : MonoBehaviour
 
     private void ShowItemSlots()
     {
-        placementButton.gameObject.SetActive(false); // Placement 버튼 비활성화
-        placementInventoryPanel.SetActive(true);    // 아이템 슬롯 패널 활성화
-        placementActionPanel.SetActive(false);      // 설치 및 취소 패널 비활성화
+        placementButton.gameObject.SetActive(false); 
+        placementInventoryPanel.SetActive(true);    
+        placementActionPanel.SetActive(false);      
     }
 
     private void HideItemSlots()
     {
-        placementButton.gameObject.SetActive(true); // Placement 버튼 활성화
-        placementInventoryPanel.SetActive(false);   // 아이템 슬롯 패널 비활성화
+        placementButton.gameObject.SetActive(true); 
+        placementInventoryPanel.SetActive(false);   
     }
 
     private void ShowPlacementActions()
     {
-        placementButton.gameObject.SetActive(false); // Placement 버튼 비활성화
-        placementActionPanel.SetActive(true);        // 설치 및 취소 패널 활성화
+        placementButton.gameObject.SetActive(false); 
+        placementActionPanel.SetActive(true);        
     }
 
     private void HidePlacementActions()
     {
-        placementActionPanel.SetActive(false);       // 설치 및 취소 패널 비활성화        
+        placementActionPanel.SetActive(false);
+        UpdateCurrentItemText("");
     }
 
     private void ShowPreviousItems()
@@ -84,33 +85,38 @@ public class UIPlacementManager : MonoBehaviour
         {
             if (i < visibleItems.Count)
             {
-                itemButtons[i].gameObject.SetActive(true);
-                Image itemIcon = itemButtons[i].transform.Find("ItemIcon").GetComponent<Image>();
-
-                if (visibleItems[i].icon != null)
-                {
-                    itemIcon.sprite = visibleItems[i].icon;
-                    itemIcon.color = new Color(itemIcon.color.r, itemIcon.color.g, itemIcon.color.b, 1f); // 아이템 아이콘 보이기
-                }
-                else
-                {
-                    Debug.LogError("Icon not found for item: " + visibleItems[i].itemName);
-                }
-
-                int index = i; // 로컬 변수로 캡처
-                itemButtons[i].onClick.RemoveAllListeners();
-                itemButtons[i].onClick.AddListener(() => SelectItem(visibleItems[index]));
+                UpdateButton(itemButtons[i], visibleItems[i], i);
             }
             else
             {
-                itemButtons[i].gameObject.SetActive(true); // 빈 슬롯도 활성화
-                Image itemIcon = itemButtons[i].transform.Find("ItemIcon").GetComponent<Image>();
-                itemIcon.sprite = null;
-                itemIcon.color = new Color(itemIcon.color.r, itemIcon.color.g, itemIcon.color.b, 0f); // 아이템 아이콘 숨기기
-                itemButtons[i].onClick.RemoveAllListeners();
+                ClearButton(itemButtons[i]);
             }
         }
         UpdateArrowButtons();
+    }
+
+    private void UpdateButton(Button button, Item item, int index)
+    {
+        button.gameObject.SetActive(true);
+        Image itemIcon = button.transform.Find("ItemIcon").GetComponent<Image>();
+
+        if (item.icon != null)
+        {
+            itemIcon.sprite = item.icon;
+            itemIcon.color = new Color(itemIcon.color.r, itemIcon.color.g, itemIcon.color.b, 1f);
+        }        
+
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() => SelectItem(item));
+    }
+
+    private void ClearButton(Button button)
+    {
+        button.gameObject.SetActive(true);
+        Image itemIcon = button.transform.Find("ItemIcon").GetComponent<Image>();
+        itemIcon.sprite = null;
+        itemIcon.color = new Color(itemIcon.color.r, itemIcon.color.g, itemIcon.color.b, 0f);
+        button.onClick.RemoveAllListeners();
     }
 
     private void SelectItem(Item item)
@@ -118,7 +124,7 @@ public class UIPlacementManager : MonoBehaviour
         placementManager.SelectItem(item);
         HideItemSlots();
         ShowPlacementActions();
-        UpdateCurrentItemText(item.itemName);
+        UpdateCurrentItemText(placementManager.SelectedItem.itemName); 
     }
 
     private void UpdateArrowButtons()
@@ -134,7 +140,7 @@ public class UIPlacementManager : MonoBehaviour
         {
             UpdateItemButtons();
             HidePlacementActions();
-            ShowItemSlots(); 
+            ShowItemSlots();
         }
         else
         {
@@ -159,17 +165,17 @@ public class UIPlacementManager : MonoBehaviour
             StartCoroutine(HideErrorPopup());
         }
     }
-        
+
     private IEnumerator HideErrorPopup()
     {
-        yield return new WaitForSeconds(1f); 
+        yield return new WaitForSeconds(1f);
         errorPopup.SetActive(false);
     }
 
     private void UpdateCurrentItemText(string itemName)
     {
         if (currentItemText != null)
-        {
+        {            
             currentItemText.text = itemName;
         }
     }
