@@ -17,7 +17,8 @@ public class UIPlacementManager : MonoBehaviour
     [SerializeField] private GameObject placementInventoryPanel;
     [SerializeField] private GameObject placementActionPanel;
     [SerializeField] private Button backButton;
-    [SerializeField] private GameObject errorPopup;    
+    [SerializeField] private GameObject errorPopup;
+    [SerializeField] private TMP_Text currentItemText;
 
     private int currentStartIndex = 0;
 
@@ -116,7 +117,8 @@ public class UIPlacementManager : MonoBehaviour
     {
         placementManager.SelectItem(item);
         HideItemSlots();
-        ShowPlacementActions();        
+        ShowPlacementActions();
+        UpdateCurrentItemText(item.itemName);
     }
 
     private void UpdateArrowButtons()
@@ -144,7 +146,8 @@ public class UIPlacementManager : MonoBehaviour
     {
         placementManager.CancelPlacement();
         HidePlacementActions();
-        ShowItemSlots();        
+        ShowItemSlots();
+        UpdateCurrentItemText("");
     }
 
     public void ShowErrorPopup(string message)
@@ -161,5 +164,13 @@ public class UIPlacementManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f); 
         errorPopup.SetActive(false);
-    }    
+    }
+
+    private void UpdateCurrentItemText(string itemName)
+    {
+        if (currentItemText != null)
+        {
+            currentItemText.text = itemName;
+        }
+    }
 }
