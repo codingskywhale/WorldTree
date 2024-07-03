@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 33109665}
   - component: {fileID: 33109667}
   - component: {fileID: 33109666}
+  - component: {fileID: 33109668}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -204,19 +205,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1711077266}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: UpgradeWaterIncreaseAmount
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &33109667
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -225,6 +214,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33109664}
   m_CullTransparentMesh: 1
+--- !u!114 &33109668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33109664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ea1e68b2b4094f9ab25ed7d8601ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  resourceManager: {fileID: 494564384}
+  root: {fileID: 262299256}
+  spirit: {fileID: 932953384}
+  touchInputManager: {fileID: 452346697}
+  playerMovement: {fileID: 1711077266}
+  upgradeType: 5
+  upgradeAmount: 1
 --- !u!1 &83346924
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +804,7 @@ GameObject:
   - component: {fileID: 203816110}
   - component: {fileID: 203816112}
   - component: {fileID: 203816111}
+  - component: {fileID: 203816113}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -864,19 +875,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 452346697}
-        m_TargetAssemblyTypeName: TouchInputManager, Assembly-CSharp
-        m_MethodName: UpgradeIncreaseAmount
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &203816112
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -885,6 +884,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203816109}
   m_CullTransparentMesh: 1
+--- !u!114 &203816113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203816109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ea1e68b2b4094f9ab25ed7d8601ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  resourceManager: {fileID: 494564384}
+  root: {fileID: 262299256}
+  spirit: {fileID: 932953384}
+  touchInputManager: {fileID: 452346697}
+  playerMovement: {fileID: 1711077266}
+  upgradeType: 2
+  upgradeAmount: 1
 --- !u!1 &224717142
 GameObject:
   m_ObjectHideFlags: 0
@@ -1085,6 +1105,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248671315}
   m_CullTransparentMesh: 1
+--- !u!1 &262299255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 262299257}
+  - component: {fileID: 262299256}
+  m_Layer: 0
+  m_Name: Root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &262299256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262299255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bad40465d21735449187ba81d4bd79c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  rootLevel: 1
+  baseWaterGeneration: 1
+  waterGenerationPerLevel: 1
+  upgradeWaterCost: 20
+  generationInterval: 1
+--- !u!4 &262299257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262299255}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 449.02597, y: 1118.5631, z: 0.56665707}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &286490098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,6 +1833,7 @@ GameObject:
   - component: {fileID: 413219022}
   - component: {fileID: 413219021}
   - component: {fileID: 413219020}
+  - component: {fileID: 413219023}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1832,19 +1904,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 413219021}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 494564384}
-        m_TargetAssemblyTypeName: ResourceManager, Assembly-CSharp
-        m_MethodName: UpgradeLevel
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &413219021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1883,6 +1943,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 413219018}
   m_CullTransparentMesh: 1
+--- !u!114 &413219023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413219018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ea1e68b2b4094f9ab25ed7d8601ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  resourceManager: {fileID: 494564384}
+  root: {fileID: 262299256}
+  spirit: {fileID: 932953384}
+  touchInputManager: {fileID: 452346697}
+  playerMovement: {fileID: 1711077266}
+  upgradeType: 3
+  upgradeAmount: 1
 --- !u!1 &452346696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,8 +2330,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterManager: {fileID: 1146352490}
-  energyManager: {fileID: 224717143}
+  root: {fileID: 262299256}
   uiManager: {fileID: 1808863808}
+  energyManager: {fileID: 224717143}
 --- !u!4 &494564385
 Transform:
   m_ObjectHideFlags: 0
@@ -2277,6 +2359,7 @@ GameObject:
   - component: {fileID: 499952580}
   - component: {fileID: 499952582}
   - component: {fileID: 499952581}
+  - component: {fileID: 499952583}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -2356,6 +2439,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499952579}
   m_CullTransparentMesh: 1
+--- !u!114 &499952583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499952579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ea1e68b2b4094f9ab25ed7d8601ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  resourceManager: {fileID: 494564384}
+  root: {fileID: 262299256}
+  spirit: {fileID: 932953384}
+  touchInputManager: {fileID: 452346697}
+  playerMovement: {fileID: 1711077266}
+  upgradeType: 0
+  upgradeAmount: 1
 --- !u!1 &536802058
 GameObject:
   m_ObjectHideFlags: 0
@@ -5258,6 +5362,110 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914331814}
   m_CullTransparentMesh: 1
+--- !u!1 &932953383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 932953386}
+  - component: {fileID: 932953385}
+  - component: {fileID: 932953384}
+  m_Layer: 0
+  m_Name: Spirit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &932953384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932953383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4fc82a703f80ca498c68106cc5f9f28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  spiritLevel: 1
+  baseEnergyGeneration: 1
+  energyGenerationPerLevel: 1
+  upgradeEnergyCost: 20
+  generationInterval: 60
+--- !u!212 &932953385
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932953383}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 2665c91c7cf9674479e70d2683422946, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &932953386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932953383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3484, y: 1.1392, z: 0}
+  m_LocalScale: {x: 0.02419615, y: 0.0219035, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1007699072
 GameObject:
   m_ObjectHideFlags: 0
@@ -5533,7 +5741,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1127747991
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5611,7 +5819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1134865992
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7949,6 +8157,7 @@ GameObject:
   - component: {fileID: 1382021239}
   - component: {fileID: 1382021241}
   - component: {fileID: 1382021240}
+  - component: {fileID: 1382021242}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -8019,19 +8228,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1711077266}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: MoveSpeedUpgrade
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1382021241
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8040,6 +8237,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382021238}
   m_CullTransparentMesh: 1
+--- !u!114 &1382021242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382021238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ea1e68b2b4094f9ab25ed7d8601ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  resourceManager: {fileID: 494564384}
+  root: {fileID: 262299256}
+  spirit: {fileID: 932953384}
+  touchInputManager: {fileID: 452346697}
+  playerMovement: {fileID: 1711077266}
+  upgradeType: 4
+  upgradeAmount: 1
 --- !u!1 &1409291899
 GameObject:
   m_ObjectHideFlags: 0
@@ -8126,6 +8344,7 @@ GameObject:
   - component: {fileID: 1429466315}
   - component: {fileID: 1429466317}
   - component: {fileID: 1429466316}
+  - component: {fileID: 1429466318}
   m_Layer: 5
   m_Name: UpgradeBtn
   m_TagString: Untagged
@@ -8205,6 +8424,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429466314}
   m_CullTransparentMesh: 1
+--- !u!114 &1429466318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429466314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7ea1e68b2b4094f9ab25ed7d8601ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterManager: {fileID: 1146352490}
+  uiManager: {fileID: 1808863808}
+  resourceManager: {fileID: 494564384}
+  root: {fileID: 262299256}
+  spirit: {fileID: 932953384}
+  touchInputManager: {fileID: 452346697}
+  playerMovement: {fileID: 1711077266}
+  upgradeType: 1
+  upgradeAmount: 1
 --- !u!1 &1432192625
 GameObject:
   m_ObjectHideFlags: 0
@@ -10766,7 +11006,6 @@ MonoBehaviour:
   - {fileID: 1591558821}
   - {fileID: 365521237}
   speed: 5
-  resourceManager: {fileID: 494564384}
   waterManager: {fileID: 1146352490}
   uiManager: {fileID: 1808863808}
   waterIncreaseAmount: 10
@@ -11361,6 +11600,10 @@ MonoBehaviour:
   waterIncreaseUpgradeCostText: {fileID: 173617171}
   upgradeWaterCostText: {fileID: 1372855497}
   energyText: {fileID: 1790696471}
+  rootLevelText: {fileID: 1204390984}
+  rootUpgradeCostText: {fileID: 1367515481}
+  spiritLevelText: {fileID: 1897374392}
+  spiritUpgradeCostText: {fileID: 893375754}
   levelFillImage: {fileID: 397527432}
   currentTreeImage: {fileID: 286490102}
   upgradedTreeImage: {fileID: 842904099}
@@ -12715,3 +12958,5 @@ SceneRoots:
   - {fileID: 1146352491}
   - {fileID: 1808863809}
   - {fileID: 224717144}
+  - {fileID: 262299257}
+  - {fileID: 932953386}

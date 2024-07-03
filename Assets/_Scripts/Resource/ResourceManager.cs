@@ -3,48 +3,33 @@ using UnityEngine;
 public class ResourceManager : MonoBehaviour
 {
     public WaterManager waterManager;
-    public EnergyManager energyManager;
+    public Root root;
     public UIManagerBG uiManager;
+    public EnergyManager energyManager;
 
     private void Start()
     {
         waterManager.OnWaterChanged += UpdateWaterUI;
+        root.OnWaterGenerated += waterManager.IncreaseWater;
         energyManager.OnEnergyChanged += UpdateEnergyUI;
         UpdateUI();
     }
 
-    public void UpgradeLevel(int amount)
-    {
-        int waterNeededForUpgrade = waterManager.CalculateWaterNeededForUpgrade(amount);
-        if (waterManager.HasSufficientWater(waterNeededForUpgrade))
-        {
-            waterManager.DecreaseWater(waterNeededForUpgrade);
-            waterManager.currentLevel += amount;
-            UpdateUI();
-            if (waterManager.currentLevel % 5 == 0)
-            {
-                UpdateGroundSize();
-            }
-        }
-        else
-        {
-            Debug.Log("물이 부족하여 강화할 수 없습니다.");
-        }
-    }
-
-    private void UpdateGroundSize()
+    public void UpdateGroundSize()
     {
         float groundScale = 8f + (waterManager.currentLevel / 10f);
         uiManager.groundSpriteRenderer.transform.localScale = new Vector3(groundScale, groundScale, groundScale);
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         int waterNeededForCurrentLevel = waterManager.CalculateWaterNeededForUpgrade(1);
         uiManager.UpdateWaterUI(waterManager.waterAmount, waterNeededForCurrentLevel);
         uiManager.UpdateLevelUI(waterManager.currentLevel);
         uiManager.UpdateUpgradeRequirementUI(waterManager.currentLevel, waterNeededForCurrentLevel);
         uiManager.UpdateTreeImages(waterManager.currentLevel, uiManager.treeImages);
+        UpdateRootUI();
+        UpdateEnergyUI(energyManager.energyAmount);
     }
 
     private void UpdateWaterUI(int newWaterAmount)
@@ -53,8 +38,16 @@ public class ResourceManager : MonoBehaviour
         uiManager.UpdateWaterUI(newWaterAmount, waterNeededForCurrentLevel);
     }
 
+    private void UpdateRootUI()
+    {
+        int rootUpgradeCost = root.CalculateUpgradeCost();
+        uiManager.UpdateRootLevelUI(root.rootLevel, rootUpgradeCost);
+    }
+
     private void UpdateEnergyUI(int newEnergyAmount)
     {
         uiManager.UpdateEnergyUI(newEnergyAmount, energyManager.maxEnergy);
     }
 }
+
+

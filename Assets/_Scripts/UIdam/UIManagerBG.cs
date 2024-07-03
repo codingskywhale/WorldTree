@@ -13,6 +13,10 @@ public class UIManagerBG : MonoBehaviour
     public TextMeshProUGUI waterIncreaseUpgradeCostText;
     public TextMeshProUGUI upgradeWaterCostText;
     public TextMeshProUGUI energyText;
+    public TextMeshProUGUI rootLevelText;
+    public TextMeshProUGUI rootUpgradeCostText;
+    public TextMeshProUGUI spiritLevelText;
+    public TextMeshProUGUI spiritUpgradeCostText;
     public Image levelFillImage;
     public Image currentTreeImage;
     public Image upgradedTreeImage;
@@ -24,7 +28,7 @@ public class UIManagerBG : MonoBehaviour
     public void UpdateWaterUI(int waterAmount, int waterNeededForCurrentLevel)
     {
         waterText.text = $"물 : {waterAmount}";
-        //levelFillImage.fillAmount = (float)waterAmount / waterNeededForCurrentLevel;
+        levelFillImage.fillAmount = (float)waterAmount / waterNeededForCurrentLevel;
     }
 
     public void UpdateEnergyUI(int energyAmount, int maxEnergy)
@@ -35,26 +39,11 @@ public class UIManagerBG : MonoBehaviour
     public void UpdateLevelUI(int currentLevel)
     {
         levelText.text = $"Level: {currentLevel}";
-        UpdateLevelFillImage(currentLevel);
-    }
-    private void UpdateLevelFillImage(int currentLevel)
-    {
-        int levelInGroup = currentLevel % 5;
-
-        // 4레벨, 9레벨, 14레벨, 19레벨 등에서는 fillAmount를 1로 설정
-        if (levelInGroup == 4)
-        {
-            levelFillImage.fillAmount = 1f;
-        }
-        else
-        {
-            levelFillImage.fillAmount = (float)levelInGroup / 4f;
-        }
     }
 
     public void UpdateUpgradeRequirementUI(int currentLevel, int waterNeededForCurrentLevel)
-    {     
-        if(currentLevel % 5 == 4)
+    {
+        if (currentLevel % 5 == 4)
         {
             upgradeRequirementText.text = "성장";
         }
@@ -72,4 +61,36 @@ public class UIManagerBG : MonoBehaviour
         upgradedTreeImage.sprite = treeImages[nextIndex];
         outsideTreeSpriteRenderer.sprite = treeImages[currentIndex];
     }
+
+    public void UpdateTouchUI(int touchIncreaseLevel, int touchIncreaseAmount, int upgradeWaterCost)
+    {
+        touchLevelText.text = $"터치 강화 레벨: {touchIncreaseLevel}";
+        upgradeWaterCostText.text = $"강화 비용: {upgradeWaterCost} 물";
+    }
+
+    public void UpdateMovementUI(int moveSpeedLevel, int moveUpgradeCost)
+    {
+        moveSpeedLevelText.text = $"주인공 스피드 강화 레벨 : {moveSpeedLevel}";
+        moveSpeedUpgradeCostText.text = $"강화 비용 : {moveUpgradeCost}";
+    }
+
+    public void UpdateWaterIncreaseUI(int waterIncreaseLevel, int waterIncreaseAmount, int waterIncreaseUpgradeCost)
+    {
+        waterIncreaseLevelText.text = $"물 증가량 강화 레벨: {waterIncreaseLevel}";
+        waterIncreaseUpgradeCostText.text = $"강화 비용: {waterIncreaseUpgradeCost} 물";
+    }
+
+    public void UpdateRootLevelUI(int rootLevel, int upgradeCost)
+    {
+        rootLevelText.text = $"뿌리 레벨: {rootLevel}";
+        rootUpgradeCostText.text = $"강화 비용: {upgradeCost} 물";
+    }
+
+    public void UpdateSpiritLevelUI(int spiritLevel, int upgradeCost)
+    {
+        // 적절한 UI 요소 업데이트
+        spiritLevelText.text = $"정령 레벨: {spiritLevel}";
+        spiritUpgradeCostText.text = $"강화 비용: {upgradeCost} 에너지";
+    }
+
 }
