@@ -124,6 +124,7 @@ public class CombatUnit : Unit
     {
         nearEnemyList.Clear();
         nowTarget = null;
+        isAttackBase = false;
         SetInitialStat();
     }
 

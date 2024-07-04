@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageSelectButton : MonoBehaviour
 {
@@ -11,8 +12,10 @@ public class StageSelectButton : MonoBehaviour
 
     public void SetStageData()
     {
-        CombatManager.Instance.stageData = selectStageData;
-        CombatManager.Instance.StartGame();
-        CombatUIManager.Instance.StageSelectWndOff();
+        TestGameManager.Instance.stageData = selectStageData;
+        //CombatManager.Instance.stageData = selectStageData;
+        //CombatManager.Instance.StartGame();
+        //CombatUIManager.Instance.StageSelectWndOff();
+        SceneManager.LoadScene(1);
     }
 }

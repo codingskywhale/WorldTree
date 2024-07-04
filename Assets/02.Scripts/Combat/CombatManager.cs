@@ -41,7 +41,9 @@ public class CombatManager : MonoBehaviour
             }
         }
 
+        stageData = TestGameManager.Instance.stageData;
         gainer = GetComponent<GoldGainer>();
+        StartGame();
     }
 
     public void StartGame()
@@ -70,7 +72,7 @@ public class CombatManager : MonoBehaviour
         for (int i = 0; i < stageData.enemyUnitDatas.Length; i++)
         {
             CombatUnitDataSO unitData = stageData.enemyUnitDatas[i];
-            objectPool.AddtoPool(unitData.unitName, unitData.unitPrefab, 20);
+            objectPool.AddtoPool(unitData.unitName, unitData.unitPrefab, 30);
         }
         spawner.StartSpawnEnemy();
     }
